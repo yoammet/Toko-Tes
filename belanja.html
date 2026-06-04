@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Belanja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen p-6">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Tombol Kembali -->
+        <a href="index.html" class="inline-block mb-6 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+            ← Kembali ke Profil
+        </a>
+
+        <h1 class="text-3xl font-bold text-slate-800 mb-6">Katalog & Form Belanja</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Sisi Kiri: Info Produk -->
+            <div class="bg-white p-6 rounded-xl shadow">
+                <img class="w-full h-56 object-cover rounded-lg" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Produk">
+                <div class="mt-4">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded">Gadget</span>
+                    <h2 class="text-xl font-bold text-slate-800 mt-2">Smartwatch Minimalis X-1</h2>
+                    <p class="text-xl font-extrabold text-emerald-600 mt-1">Rp 450.000</p>
+                    <p class="text-slate-500 text-sm mt-2">Jam tangan pintar dengan fitur pelacak kesehatan, notifikasi smartphone, dan baterai tahan hingga 7 hari. Desain elegan cocok untuk harian.</p>
+                </div>
+            </div>
+
+            <!-- Sisi Kanan: Form Belanja -->
+            <div class="bg-white p-6 rounded-xl shadow">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Formulir Pemesanan</h3>
+                
+                <!-- PENTING: Ganti URL action ini nanti pada Langkah 2 -->
+                <form id="orderForm" action="https://script.google.com/macros/s/AKfycbwLYGHVvm3dnJgWfQvNqoc58Z-2-R7qmASfKorWzewxMuIosDThFIL23iXC2lxWGm3mmQ/exec" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Nama Lengkap</label>
+                        <input type="text" name="Nama" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Nomor WhatsApp</label>
+                        <input type="tel" name="WhatsApp" placeholder="08xxxxxxxxxx" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Alamat Pengiriman</label>
+                        <textarea name="Alamat" rows="3" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Jumlah Produk</label>
+                        <input type="number" name="Jumlah" min="1" value="1" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    </div>
+
+                    <button type="submit" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow transition">
+                        Beli Sekarang
+                    </button>
+                </form>
+                
+                <p id="successMessage" class="hidden text-emerald-600 font-semibold text-center mt-4">Pesanan berhasil dikirim! Kami akan menghubungi Anda via WhatsApp.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script agar setelah kirim form tidak pindah halaman kosong -->
+    <script>
+        const form = document.getElementById('orderForm');
+        const msg = document.getElementById('successMessage');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            fetch(form.action, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    msg.classList.remove('hidden');
+                    form.reset();
+                })
+                .catch(error => alert('Error!', error.message))
+        })
+    </script>
+</body>
+</html>
